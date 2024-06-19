@@ -30,20 +30,24 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "Matkul", nullable = false)
     private String name;
 
-    @Column(name = "course_id", nullable = false, unique = true)
+    @Column(name = "Code_Matkul", nullable = false, unique = true)
     private String courseId;
+
+    @Column(name = "SKS", nullable = false)
+    private int courseSks;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Score> scores = new HashSet<>();
 
     public Course() {}
 
-    public Course(String name, String courseId) {
+    public Course(String name, String courseId, int courseSks) {
         this.name = name;
         this.courseId = courseId;
+        this.courseSks = courseSks;
     }
 
     public int getId() {
@@ -68,6 +72,14 @@ public class Course {
 
     public void setCourseId(String courseId) {
         this.courseId = courseId;
+    }
+
+    public int getCourseSks() {
+        return courseSks;
+    }
+
+    public void setCourseSks(int courseSks) {
+        this.courseSks = courseSks;
     }
 
     public Set<Score> getScores() {
