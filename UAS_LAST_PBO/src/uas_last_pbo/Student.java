@@ -107,7 +107,6 @@ public class Student extends User{
         clazz.getStudents().add(this);
     }
     
-        // Menambahkan metode untuk mencetak nilai mahasiswa
     // Menambahkan metode untuk mencetak nilai mahasiswa
     public void printAllScores() {
         if (scores.isEmpty()) {
@@ -127,17 +126,23 @@ public class Student extends User{
         if (scores.isEmpty()) {
             return "0.00";
         }
-        
+
         int totalScore = 0;
-        int totalTakenCourse = 0;
+        int totalCredits = 0;
 
         for (Score score : scores) {
-            totalTakenCourse += 1;
-            totalScore += score.getScore();
+            Course course = score.getCourse();
+            int credits = course.getCourseSks();
+
+            totalCredits += credits;
+            totalScore += score.getScore() * credits;
         }
 
-        // IPK = (totalScore / totalTakenCourse) / 25
-        float gpa = ((float) totalScore / totalTakenCourse) / 25;
+        // Menghitung rata-rata nilai yang ditimbang dengan credits
+        float weightedAverage = (float) totalScore / totalCredits;
+
+        // Mengubah rata-rata nilai dari skala 0-100 menjadi skala 0-4
+        float gpa = (weightedAverage / 100) * 4;
 
         // Memformat GPA dengan dua angka di belakang koma
         return String.format("%.2f", gpa);
